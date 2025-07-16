@@ -3,7 +3,7 @@ __version__ = "1.1"
 
 SECRET_PATTERNS = {
     "AWS Access Key": r"\b(A3T|AKIA|ASIA|AGPA|AIDA|AROA|AIPA|ANPA|ANVA)[0-9A-Z]{16}\b",
-    "AWS Secret Key": r"(?i)(aws_secret_access_key\s*=\s*|['\"]?aws_secret_access_key['\"]?\s*[:=]\s*)[0-9a-zA-Z/+]{40}",
+    "AWS Secret Key": r"(?i)(aws_secret_access_key\s*[=:]\s*)?[0-9a-zA-Z/+]{40}\b",
     "Slack Token": r"\bxox[baprs]-[0-9a-zA-Z]{10,48}-[0-9a-zA-Z]{10,48}-[0-9a-zA-Z]{10,48}\b",
     "Stripe Secret Key": r"\bsk_live_[0-9a-zA-Z]{24}\b",
     "Stripe Restricted Key": r"\brk_live_[0-9a-zA-Z]{24}\b",
@@ -15,7 +15,7 @@ SECRET_PATTERNS = {
     "Bitbucket App Password": r"\bbba_[a-z0-9]{32}\b",
     "Google API Key": r"\bAIza[0-9A-Za-z-_]{35}\b",
     "Google OAuth Access Token": r"\bya29\.[0-9A-Za-z\-_]+\b",
-    "Heroku API Key": r"\b[0-9a-fA-F]{8}(-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12}\b",
+    "Heroku API Key": r"\b[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\b",
     "Discord Bot Token": r"\b[M-N][A-Za-z\d]{23}\.[\w-]{6}\.[\w-]{27}\b",
     "Telegram Bot Token": r"\b\d{9,10}:[A-Za-z0-9_-]{35}\b",
     "Mailgun API Key": r"\bkey-[0-9a-zA-Z]{32}\b",
@@ -23,7 +23,7 @@ SECRET_PATTERNS = {
     "Twilio API Key": r"\bSK[0-9a-fA-F]{32}\b",
     "Twilio Auth Token": r"(?i)\btwilio(?:_auth_token)?\b.*?[:=][ \t]*[a-f0-9]{32}\b",
     "Facebook Access Token": r"\bEAACEdEose0cBA[0-9A-Za-z]+\b",
-    "Dropbox API Secret": r"\bsl\.[A-Za-z0-9_-]{15,}\b",
+    "Dropbox API Secret": r"\bsl\.[A-Za-z0-9_-]{30,}\b",
     "DigitalOcean Personal Access Token": r"\bdop_v1_[a-f0-9]{64}\b",
     "Datadog API Key": r"\bddapi_[a-z0-9]{25}\b",
     "Datadog Application Key": r"\bddaak_[a-z0-9]{38}\b",
@@ -33,10 +33,10 @@ SECRET_PATTERNS = {
     "JWT Token": r"\beyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9._-]{10,}\.[A-Za-z0-9._-]{10,}\b",
     "Private Key": r"-----BEGIN (?:RSA|DSA|EC|OPENSSH|PGP) PRIVATE KEY-----[\s\S]+?-----END (?:RSA|DSA|EC|OPENSSH|PGP) PRIVATE KEY-----",
     "MongoDB Atlas URI": r"\bmongodb\+srv:\/\/[^\s:@]+:[^\s:@]+@[^\s]+",
-    "Azure SAS Token": r"\bsv=\d{4}-\d{2}-\d{2}&ss=\w+&srt=\w+&sp=\w+&se=\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z&st=\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z&spr=https?&sig=[A-Za-z0-9%]{20,}\b",
+    "Azure SAS Token": r"\bsv=\d{4}-\d{2}-\d{2}&ss=[a-zA-Z]+&srt=[a-zA-Z]+&sp=[a-zA-Z]+&se=\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z&st=\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z&spr=https?&sig=[A-Za-z0-9%]{20,}\b",
     "Atlassian API Token": r"\b[A-Za-z0-9]{24}\.[A-Za-z0-9]{24}\b",
     "Sentry Auth Token": r"\bsentry_auth_token_[0-9a-f]{32}\b",
-    "Vercel Token": r"\bvercel\.token\.[a-zA-Z0-9_-]{84}\b",
+    "Vercel Token": r"\bvercel\.token\.[a-zA-Z0-9_-]{84}\b"
 }
 
 
