@@ -53,6 +53,6 @@ Includes but not limited to:
 
 ## 📦 Usage
 To scan a directory (e.g. the provided test/ folder):
-   '''bash
+   ```bash
    python3 -m scanner.main --path test/
 
