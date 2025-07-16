@@ -1,0 +1,2 @@
+# Requirements for Secret-Scanner
+rich>=13.0.0  # For colored console output and tables
