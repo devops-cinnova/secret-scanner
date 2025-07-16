@@ -33,7 +33,6 @@ SECRET_PATTERNS = {
     "JWT Token": r"eyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9._-]{10,}\.[A-Za-z0-9._-]{10,}",
     "Private Key": r"-----BEGIN (?:RSA|DSA|EC|OPENSSH|PGP) PRIVATE KEY-----[\\s\\S]+?-----END (?:RSA|DSA|EC|OPENSSH|PGP) PRIVATE KEY-----",
     "MongoDB Atlas Service Account Key": r"mongodb(\+srv)?:\/\/[\w\-]+:[^@]+@[^:]+(:\d+)?\/\w+",
-    "Azure Storage Account Key": r"[A-Za-z0-9+/=]{88}",
     "Azure SAS Token": r"sv=\d{4}-\d{2}-\d{2}&ss=[a-zA-Z]+&srt=[a-zA-Z]+&sp=[a-zA-Z]+&se=\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z&st=\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z&spr=https?&sig=[A-Za-z0-9%]+",
     "Atlassian API Token": r"[A-Za-z0-9]{24}\.[A-Za-z0-9]{24}",
     "Sentry Auth Token": r"sentry_auth_token_[0-9a-f]{32}",
