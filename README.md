@@ -30,7 +30,7 @@ Secret-Scanner is an advanced secrets detection tool designed for DevOps and sec
 
 1. **Clone the repository:**
    ```bash
-   git clone <your-repo-url>
+   git clone https://github.com/devops-cinnova/secret-scanner
    cd secret_scanner
    ```
 
