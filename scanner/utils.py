@@ -3,7 +3,7 @@ __version__ = "1.1"
 
 SECRET_PATTERNS = {
     "AWS Access Key": r"\b(A3T|AKIA|ASIA|AGPA|AIDA|AROA|AIPA|ANPA|ANVA)[0-9A-Z]{16}\b",
-    "AWS Secret Key": r"(?i)(aws_secret_access_key\s*[=:]\s*)?[0-9a-zA-Z/+]{40}\b",
+    "AWS Secret Key": r"(?i)\baws_secret_access_key\s*[:=]\s*([0-9a-zA-Z/+]{40})\b",
     "Slack Token": r"\bxox[baprs]-[0-9a-zA-Z]{10,48}-[0-9a-zA-Z]{10,48}-[0-9a-zA-Z]{10,48}\b",
     "Stripe Secret Key": r"\bsk_live_[0-9a-zA-Z]{24}\b",
     "Stripe Restricted Key": r"\brk_live_[0-9a-zA-Z]{24}\b",
