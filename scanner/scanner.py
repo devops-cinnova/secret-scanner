@@ -22,26 +22,29 @@ def get_ignore_patterns(base_path):
     return patterns
 
 def should_ignore_file(file_path, ignore_patterns):
-    normalized_path = file_path.replace("\\", "/")  # For Windows compatibility
+    normalized_path = file_path.replace("\\", "/")
+    file_name = os.path.basename(normalized_path)
     for pattern in ignore_patterns:
-        # Handle directory ignore (e.g., venv/, node_modules/)
+        pattern = pattern.strip()
+        if not pattern:
+            continue
         if pattern.endswith("/"):
-            if normalized_path.startswith(pattern) or f"/{pattern}" in normalized_path:
+            if normalized_path.startswith(pattern) or f"/{pattern.strip('/')}/" in normalized_path:
                 return True
-        # Handle wildcard and extension patterns
-        if fnmatch.fnmatch(normalized_path, pattern):
+        if pattern == file_name or pattern == normalized_path:
+            return True
+        # Glob-style matching (e.g. *.jpg)
+        if fnmatch.fnmatch(normalized_path, pattern) or fnmatch.fnmatch(file_name, pattern):
             return True
     return False
 
 def scan_for_secrets(base_path, verbose=False):
     findings = []
     ignore_patterns = get_ignore_patterns(base_path)
-
     for root, dirs, files in os.walk(base_path):
         for file in files:
             full_path = os.path.join(root, file)
             rel_path = os.path.relpath(full_path, base_path)
-
             if should_ignore_file(rel_path, ignore_patterns):
                 if verbose:
                     console.print(f"[yellow][SKIP][/yellow] Ignored by pattern: [bold]{rel_path}[/bold]")
@@ -51,10 +54,8 @@ def scan_for_secrets(base_path, verbose=False):
                 if verbose:
                     console.print(f"[blue][SKIP][/blue] Unsupported file type: [bold]{rel_path}[/bold]")
                 continue
-
             if verbose:
                 console.print(f"[cyan][SCAN][/cyan] Scanning file: [bold]{rel_path}[/bold]")
-
             try:
                 with open(full_path, 'r', encoding='utf-8', errors='ignore') as f:
                     for i, line in enumerate(f, start=1):
