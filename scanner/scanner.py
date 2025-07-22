@@ -6,6 +6,7 @@ from rich.panel import Panel
 from rich.text import Text
 from rich.markdown import Markdown
 from rich import box
+import fnmatch
 
 console = Console()
 
@@ -21,12 +22,14 @@ def get_ignore_patterns(base_path):
     return patterns
 
 def should_ignore_file(file_path, ignore_patterns):
+    normalized_path = file_path.replace("\\", "/")  # For Windows compatibility
     for pattern in ignore_patterns:
-        if pattern.startswith("*") and file_path.endswith(pattern[1:]):
-            return True
-        elif pattern.endswith("/") and f"/{pattern[:-1]}/" in file_path.replace("\\", "/"):
-            return True
-        elif pattern in file_path:
+        # Handle directory ignore (e.g., venv/, node_modules/)
+        if pattern.endswith("/"):
+            if normalized_path.startswith(pattern) or f"/{pattern}" in normalized_path:
+                return True
+        # Handle wildcard and extension patterns
+        if fnmatch.fnmatch(normalized_path, pattern):
             return True
     return False
 
@@ -78,7 +81,7 @@ def print_scan_results(findings):
     for finding in findings:
         file_info = f"[magenta]File:[/magenta] [bold]{finding['file']}[/bold]  [cyan]Line:[/cyan] [bold]{finding['line']}[/bold]"
         risk_info = f"[red]Risk Type:[/red] [bold]{finding['risk']}[/bold]"
-        secret_snippet = f"[yellow]Secret:[/yellow] [italic]{finding['secret'][:60]}{'...' if len(finding['secret']) > 60 else ''}[/italic]"
+        secret_snippet = f"[yellow]Secret:[/yellow] [italic]{finding['secret'][:8]}{'...' if len(finding['secret']) > 8 else ''}[/italic]"
         panel_content = f"{file_info}\n{risk_info}\n{secret_snippet}"
         console.print(Panel(panel_content, title="[bold red]Secret Found[/bold red]", expand=False, border_style="red", box=box.ROUNDED))
 
