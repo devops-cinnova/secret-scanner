@@ -45,7 +45,7 @@ SECRET_PATTERNS = {
     "Datadog App Key": r"ddaak_[a-z0-9]{38}",
     "DigitalOcean Token": r"dop_v1_[a-f0-9]{64}",
     # === Credentials & Secrets ===
-    "Hardcoded Password": r"(?i)(password|passwd|pwd)[^a-z0-9]{0,10}[:=][^a-z0-9\"']{0,10}[^\s\"']{6,}",
+    "Hardcoded Password":r"(?i)(password|passwd|pwd)[^a-zA-Z0-9]{0,10}[:=]\s*['\"]?[^\s\"']{6,}['\"]?",
     "Hardcoded Secret": r"(?i)(secret|secrettoken)[^a-z0-9]{0,10}[:=][^a-z0-9\"']{0,10}[^\s\"']{6,}",
     "Hardcoded API Key": r"(?i)(api[_\-]?key)[^a-z0-9]{0,10}[:=][^a-z0-9\"']{0,10}[a-z0-9\-_]{16,}",
     # === URLs & URIs ===
@@ -56,7 +56,7 @@ SECRET_PATTERNS = {
     # === Encoded Secrets ===
     "Base64 PEM Block": r"(LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLS[\w+/=]{100,})",
     "Hexadecimal Key": r"\b[a-f0-9]{32,64}\b",
-    "Base64 String": r"\b[A-Za-z0-9+/]{40,}={0,2}\b",
+    "Base64 String": r"\b(?:[A-Za-z0-9+/]{30,}={0,2}){2,}\b",
     # === Private Keys ===
     "RSA Private Key": r"-----BEGIN RSA PRIVATE KEY-----[\s\S]+?-----END RSA PRIVATE KEY-----",
     "DSA Private Key": r"-----BEGIN DSA PRIVATE KEY-----[\s\S]+?-----END DSA PRIVATE KEY-----",
