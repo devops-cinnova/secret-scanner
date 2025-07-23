@@ -24,7 +24,7 @@ SECRET_PATTERNS = {
     "Terraform Cloud Token": r"tfr_[a-zA-Z0-9]{32,64}",
     # === Auth & OAuth ===
     "JWT Token": r"eyJ[A-Za-z0-9_-]+\.[A-Za-z0-9._-]+\.[A-Za-z0-9._-]+",
-    "Bearer Token": r"\bBearer\s+[A-Za-z0-9\-._~+/]+=*\b",
+    #"Bearer Token": r"\bBearer\s+[A-Za-z0-9\-._~+/]+=*\b",
     "Okta Token": r"00[0-9a-zA-Z]{38}\$[0-9a-zA-Z]{20}",
     "Auth0 Client Secret": r"(?i)client_secret[^a-z0-9:=]{0,5}[:=][^a-z0-9]{0,5}[a-zA-Z0-9\-_]{32,}",
     # === SaaS APIs ===
