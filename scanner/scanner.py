@@ -10,8 +10,32 @@ import fnmatch
 
 console = Console()
 
+DEFAULT_IGNORE_CONTENT = """\
+node_modules/*
+venv/*
+test/
+*.jpg
+*.png
+*.gif
+*.mp4
+*.md
+*.pyc
+__pycache__/
+scanner/
+.git/
+package-lock.json
+secret-scanner/test/secrets.txt
+"""
+
+def ensure_default_ignore_exists():
+    default_ignore = os.path.join(os.getcwd(), ".secret-scanner-ignore")
+    if not os.path.isfile(default_ignore):
+        with open(default_ignore, "w") as f:
+            f.write(DEFAULT_IGNORE_CONTENT)
+
 def get_ignore_patterns(base_path):
-    ignore_file = os.path.join(base_path, ".secret-scanner-ignore")
+    ensure_default_ignore_exists()
+    ignore_file = os.path.join(os.getcwd(), ".secret-scanner-ignore")
     patterns = []
     if os.path.isfile(ignore_file):
         with open(ignore_file, 'r') as f:
@@ -21,22 +45,32 @@ def get_ignore_patterns(base_path):
                     patterns.append(cleaned)
     return patterns
 
-def should_ignore_file(file_path, ignore_patterns):
-    normalized_path = file_path.replace("\\", "/")
+def should_ignore_file(rel_path, ignore_patterns):
+    normalized_path = rel_path.replace("\\", "/").lstrip("./")
     file_name = os.path.basename(normalized_path)
     for pattern in ignore_patterns:
-        pattern = pattern.strip()
+        pattern = pattern.strip().replace("\\", "/").lstrip("./")
         if not pattern:
             continue
+        # Directory pattern (e.g., venv/ or node_modules/)
         if pattern.endswith("/"):
-            if normalized_path.startswith(pattern) or f"/{pattern.strip('/')}/" in normalized_path:
+            # Match root folder directly
+            if normalized_path.startswith(pattern):
                 return True
-        if pattern == file_name or pattern == normalized_path:
+            # Match any path that includes the folder (e.g., venv/lib/...)
+            if f"/{pattern.strip('/')}/" in normalized_path:
+                return True
+            # Also match top-level file like `venv/something.py`
+            if normalized_path.startswith(pattern.strip('/')):
+                return True
+        # Exact match
+        if normalized_path == pattern or file_name == pattern:
             return True
-        # Glob-style matching (e.g. *.jpg)
+        # Glob pattern support
         if fnmatch.fnmatch(normalized_path, pattern) or fnmatch.fnmatch(file_name, pattern):
             return True
     return False
+
 
 def scan_for_secrets(base_path, verbose=False):
     findings = []
@@ -44,7 +78,12 @@ def scan_for_secrets(base_path, verbose=False):
     for root, dirs, files in os.walk(base_path):
         for file in files:
             full_path = os.path.join(root, file)
-            rel_path = os.path.relpath(full_path, base_path)
+            rel_path = os.path.relpath(full_path, base_path).replace("\\", "/")
+            # Strip top-level dir like "estore/" if scanning from outside
+            parts = rel_path.split("/")
+            if len(parts) > 1 and parts[0] == os.path.basename(base_path):
+                rel_path = "/".join(parts[1:])
+
             if should_ignore_file(rel_path, ignore_patterns):
                 if verbose:
                     console.print(f"[yellow][SKIP][/yellow] Ignored by pattern: [bold]{rel_path}[/bold]")
