@@ -11,21 +11,77 @@ import fnmatch
 console = Console()
 
 DEFAULT_IGNORE_CONTENT = """\
+# Dependency/lock files
+package-lock.json
 pnpm-lock.yaml
+yarn.lock
+poetry.lock
+Pipfile.lock
+composer.lock
+Gemfile.lock
+*.csproj
+*.sln
+*.toml
+*.gradle
+# Virtual environments & build artifacts
 node_modules/*
 venv/*
+__pycache__/
+*.pyc
+dist/
+build/
+out/
+coverage/
+*.egg-info/
+
+# Tests, samples, and mock data
 test/
+tests/
+mock/
+examples/
+fixtures/
+secret-scanner/test/secrets.txt
+# Docs & metadata
+*.md
+*.rst
+*.txt
+docs/
+CHANGELOG*
+LICENSE
+README*
+# Media & binary formats
 *.jpg
+*.jpeg
 *.png
 *.gif
+*.svg
 *.mp4
-*.md
-*.pyc
-__pycache__/
-scanner/
+*.mp3
+*.mov
+*.pdf
+*.zip
+*.tar.gz
+*.tar
+*.7z
+*.exe
+*.dll
+*.dmg
+*.iso
+# VCS & CI/CD metadata
 .git/
-package-lock.json
-secret-scanner/test/secrets.txt
+.github/
+.gitlab/
+.circleci/
+scanner/
+.idea/
+.vscode/
+*.iml
+
+# Secrets dump directories
+secrets/
+*.bak
+*.old
+*.swp
 """
 
 def ensure_default_ignore_exists():
