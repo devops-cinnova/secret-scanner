@@ -11,6 +11,7 @@ import fnmatch
 console = Console()
 
 DEFAULT_IGNORE_CONTENT = """\
+pnpm-lock.yaml
 node_modules/*
 venv/*
 test/
