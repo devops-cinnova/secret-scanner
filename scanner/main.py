@@ -1,6 +1,6 @@
 import argparse
 import os
-from scanner.scanner import scan_for_secrets, print_scan_results
+from .scanner import scan_for_secrets, print_scan_results
 
 
 def main():
