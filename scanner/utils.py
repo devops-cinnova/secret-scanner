@@ -3,13 +3,13 @@ __version__ = "1.1"
 
 SECRET_PATTERNS = {
     # === Cloud Providers ===
-    "AWS Access Key": r"(?<![A-Z0-9])(AKIA|ASIA)[0-9A-Z]{16}(?![A-Z0-9])",
+    "AWS Access Key": r"(?<![A-Z0-9])(AKIA|ASIA)[0-9A-Z]{16}(?![A-Z0-9])", 
     "AWS Secret Key": r"(?i)aws_secret_access_key[^a-z0-9]{0,5}[:=][^a-z0-9/+]{0,5}[0-9a-zA-Z/+]{40}",
     "AWS Session Token": r"(?i)aws_session_token[^a-z0-9]{0,5}[:=][^a-z0-9/+]{0,5}[A-Za-z0-9/+=]{16,}",
     "GCP API Key": r"(?<![A-Za-z0-9])AIza[0-9A-Za-z\-_]{35}(?![A-Za-z0-9])",
     "GCP OAuth Token": r"(?<![A-Za-z0-9])ya29\.[0-9A-Za-z\-_]+(?![A-Za-z0-9])",
     "GCP Service Account": r'"type"\s*:\s*"service_account"',
-    "Azure Access Token": r"(?i)azure.*(?:key|token)[\s:=]+[a-z0-9]{32,}",
+    "Azure Access Token": r"(?i)azure[^a-z0-9]{0,5}(access_)?(key|token)[^a-z0-9]{0,5}[:=][^a-z0-9]{0,5}[a-z0-9]{32,}",
     "Azure Storage Key": r"(?<![A-Za-z0-9+/=])[A-Za-z0-9+/=]{88}(?![A-Za-z0-9+/=])",
     "Azure SAS Token": r"sv=\d{4}-\d{2}-\d{2}.*?&sig=[A-Za-z0-9%]+",
     # === Git & CI/CD ===
@@ -45,7 +45,7 @@ SECRET_PATTERNS = {
     "Datadog App Key": r"ddaak_[a-z0-9]{38}",
     "DigitalOcean Token": r"dop_v1_[a-f0-9]{64}",
     # === Credentials & Secrets ===
-    "Hardcoded Password": r"(?i)(password|passwd|pwd)[^a-z0-9]{0,10}[:=][^a-z0-9\"']{0,10}[^\s\"']{6,}",
+    "Hardcoded Password":r"(?i)(password|passwd|pwd)[^a-zA-Z0-9]{0,10}[:=]\s*['\"]?[^\s\"']{6,}['\"]?",
     "Hardcoded Secret": r"(?i)(secret|secrettoken)[^a-z0-9]{0,10}[:=][^a-z0-9\"']{0,10}[^\s\"']{6,}",
     "Hardcoded API Key": r"(?i)(api[_\-]?key)[^a-z0-9]{0,10}[:=][^a-z0-9\"']{0,10}[a-z0-9\-_]{16,}",
     # === URLs & URIs ===
@@ -56,7 +56,7 @@ SECRET_PATTERNS = {
     # === Encoded Secrets ===
     "Base64 PEM Block": r"(LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLS[\w+/=]{100,})",
     "Hexadecimal Key": r"\b[a-f0-9]{32,64}\b",
-    "Base64 String": r"\b[A-Za-z0-9+/]{40,}={0,2}\b",
+    "Base64 String": r"\b(?:[A-Za-z0-9+/]{30,}={0,2}){2,}\b",
     # === Private Keys ===
     "RSA Private Key": r"-----BEGIN RSA PRIVATE KEY-----[\s\S]+?-----END RSA PRIVATE KEY-----",
     "DSA Private Key": r"-----BEGIN DSA PRIVATE KEY-----[\s\S]+?-----END DSA PRIVATE KEY-----",
