@@ -51,9 +51,6 @@ SECRET_PATTERNS = {
     "PostgreSQL URI": r"postgres(?:ql)?:\/\/[^:\s]+:[^@\s]+@[^:\s]+(?::\d+)?\/[^?\s]+",
     "MySQL URI": r"mysql:\/\/[^:\s]+:[^@\s]+@[^:\s]+(?::\d+)?\/[^?\s]+",
     "MongoDB URI": r"mongodb(\+srv)?:\/\/[^:\s]+:[^@\s]+@[^:\s\/]+(?:[:\d]+)?\/[^\s]+",
-    # === Encoded Secrets ===
-    "Base64 PEM Block": r"(LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLS[\w+/=]{100,})",
-    "Hexadecimal Key": r"(?i)\b(key|secret|token|password)\b\s*[:=]\s*['\"]?([a-f0-9]{32,64})['\"]?",
     # === Private Key Headers (Single-line only) ===
     "RSA Private Key": r"-----BEGIN RSA PRIVATE KEY-----",
     "DSA Private Key": r"-----BEGIN DSA PRIVATE KEY-----",
