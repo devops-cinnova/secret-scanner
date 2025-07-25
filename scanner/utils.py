@@ -43,7 +43,7 @@ SECRET_PATTERNS = {
     "Datadog App Key": r"ddaak_[a-z0-9]{38}",
     "DigitalOcean Token": r"dop_v1_[a-f0-9]{64}",
     # === Credentials & Secrets ===
-    "Hardcoded Password": r"(?i)\b[a-z0-9_.-]*?(password|passwd|pwd)[a-z0-9_.-]*?\s*[:=]\s*(['\"`])(?!<\1>)(?:(?!\1).){6,}\1",
+   # "Hardcoded Password": r"(?i)\b[a-z0-9_.-]*?(password|passwd|pwd)[a-z0-9_.-]*?\s*[:=]\s*(['\"`])(?!<\1>)(?:(?!\1).){6,}\1",
     "Hardcoded Secret": r"(?i)\b[a-z0-9_.-]*?(secret|secrettoken|private_key|dsa_key)[a-z0-9_.-]*?\s*[:=]\s*(['\"])(?!<\1>)(?:(?!\1).){6,}\1",
     "Hardcoded API Key": r"(?i)\b[a-z0-9_.-]*?api[_\-]?key[a-z0-9_.-]*?\s*[:=]\s*(['\"])(?!<\1>)(?:(?!\1)[a-z0-9-_]){16,}\1",
     # === URLs & URIs ===
