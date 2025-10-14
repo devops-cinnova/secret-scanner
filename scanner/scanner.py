@@ -171,8 +171,7 @@ def scan_for_secrets(base_path, verbose=False):
 
 def print_scan_results(findings):
     if not findings:
-        
-        console.print("\n [bold green] No secrets found! Your codebase appears clean. [/bold green]\n")
+        console.print("\n[bold green]✅ No secrets found! Your codebase appears clean. 🎉[/bold green]\n")
         return
 
     console.print("\n[bold red]🚨 Secrets Detected![/bold red]\n")
